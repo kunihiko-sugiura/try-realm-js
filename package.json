@@ -1,0 +1,29 @@
+{
+  "name": "try-realm-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "realm": "babel-node index.js "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kunihiko-sugiura/try-realm-js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kunihiko-sugiura/try-realm-js/issues"
+  },
+  "homepage": "https://github.com/kunihiko-sugiura/try-realm-js#readme",
+  "dependencies": {
+    "realm": "^1.0.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "babel-preset-es2015": "^6.22.0",
+    "install": "^0.8.7",
+    "npm": "^4.3.0",
+    "shortid": "^2.2.6"
+  }
+}
