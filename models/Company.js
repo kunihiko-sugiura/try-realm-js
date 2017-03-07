@@ -7,7 +7,7 @@ Company.schema = {
     primaryKey: 'id',
     properties: {
         id:    'string',
-        name:    {type: 'string', indexed: true}
+        name:    {type: 'string', default: '', indexed: true}
     }
 };
 export default Company;

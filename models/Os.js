@@ -1,7 +1,13 @@
 /**
  * Created by kuni on 2017/03/05.
  */
-class Os {}
+class Os {
+    // ** computed property
+    get age() {
+        const now = new Date();
+        return now.getFullYear() - this.year;
+    }
+}
 Os.schema = {
     name:       'Os',
     primaryKey: 'id',
