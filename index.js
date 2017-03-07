@@ -3,49 +3,50 @@ import ShortId from "shortid";
 import Os from './models/Os';
 import Company from './models/Company';
 
-Realm.defaultPath = './db/app.realm';
+// Realm.defaultPath = './db/app.realm';
 const config = {
+    path: './db/app.realm',
     schema: [Os, Company]
 };
-let db = new Realm(config);
+let realm = new Realm(config);
 
 // 全てのデータを消す
-db.write(() => {
-    db.deleteAll();
+realm.write(() => {
+    realm.deleteAll();
 });
 
-db.write(() => {
-    db.create('Company', {
+realm.write(() => {
+    realm.create('Company', {
         id:ShortId.generate(),
         name: 'Apple'
     });
-    db.create('Company', {
+    realm.create('Company', {
         id:ShortId.generate(),
         name: 'Micro Soft'
     });
 });
 
-let companyApple = db.objects('Company').filtered('name = "Apple"').slice(0, 1);
-let companyMs = db.objects('Company').filtered('name = "Micro Soft"').slice(0, 1);
+let companyApple = realm.objects('Company').filtered('name = $0', "Apple").slice(0, 1);
+let companyMs = realm.objects('Company').filtered('name = $0', "Micro Soft").slice(0, 1);
 
-
+let sierra = null;
 // Create Realm objects and write to local storage
-db.write(() => {
-    db.create('Os', {
+realm.write(() => {
+    realm.create('Os', {
         id: ShortId.generate(),
         name:    'Windows98',
         version: '98',
         company: companyMs[0],
         year:    1998
     });
-    db.create('Os', {
+    realm.create('Os', {
         id: ShortId.generate(),
         name:    'Windows10',
         version: '10',
         company: companyMs[0],
         year:    2015
     });
-    let sierra = db.create('Os', {
+    sierra = realm.create('Os', {
         id: ShortId.generate(),
         name:    'macOS Sierra',
         version: '10.12',
@@ -56,7 +57,7 @@ db.write(() => {
     sierra.year += 2;
 
     // ** insert
-    db.create('Os', {
+    realm.create('Os', {
         id: ShortId.generate(),
         name:    'OS X El Capitan',
         version: '10.11',
@@ -64,7 +65,7 @@ db.write(() => {
         year:    2015
     });
 
-    db.create('Os', {
+    realm.create('Os', {
         id: ShortId.generate(),
         name:    'OS X Yosemite',
         version: '10.10',
@@ -73,33 +74,31 @@ db.write(() => {
     });
 });
 
-let oses = db.objects('Os').filtered('year >= 2014');
+let oses = realm.objects('Os').filtered('year >= $0', 2014);
 console.log(oses);
 
+// ** Delete
+realm.write(() => {
+    realm.delete(sierra);
+});
+
+// ** Filter BeginWith
+let foundBeginWith = realm.objects('Os').filtered('name BEGINSWITH $0', "OS");
+console.log({
+    'Filter BeginWith':foundBeginWith
+});
+
+// ** Filter EndWith
+let foundEndWith = realm.objects('Os').filtered('name ENDSWITH $0', "Yosemite");
+console.log({
+    'Filter BeginWith':foundEndWith
+});
+
+// ** Filter Contain
+let foundContain = realm.objects('Os').filtered('name CONTAINS $0', "indows");
+console.log({
+    'Filter Contain':foundContain
+});
 
 
-
-
-
-// // Add another car
-// db.write(() => {
-//
-//
-//
-//     let myCar = realm.create('Car', {
-//         make: 'Ford',
-//         model: 'Focus',
-//         miles: 2000,
-//     });
-//
-//
-// });
-//
-// // Query results are updated in realtime
-// console.log(cars.length);
-
-
-
-
-
-db.close();
+realm.close();
