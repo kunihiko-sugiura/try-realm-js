@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "realm": "babel-node index.js "
+    "realm": "babel-node index.js ",
+    "migrate": "babel-node migration.js "
   },
   "repository": {
     "type": "git",
@@ -22,7 +23,9 @@
   "devDependencies": {
     "babel-cli": "^6.23.0",
     "babel-preset-es2015": "^6.22.0",
+    "fs": "0.0.1-security",
     "install": "^0.8.7",
+    "moment": "^2.17.1",
     "npm": "^4.3.0",
     "shortid": "^2.2.6"
   }
