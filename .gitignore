@@ -38,6 +38,5 @@ jspm_packages
 
 
 
-db
 .idea
 realm-object-server/**/*
